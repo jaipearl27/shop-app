@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:dev.sqlite"
+}
+
+model Session {
+  id            String    @id
+  shop          String
+  state         String
+  isOnline      Boolean   @default(false)
+  scope         String?
+  expires       DateTime?
+  accessToken   String
+  userId        BigInt?
+  firstName     String?
+  lastName      String?
+  email         String?
+  accountOwner  Boolean   @default(false)
+  locale        String?
+  collaborator  Boolean?  @default(false)
+  emailVerified Boolean?  @default(false)
+}
+
+model Orders {
+  id                   String   @id
+  shop                 String
+  admin_graphql_api_id String
+  order                Json
+  synched              Boolean  @default(false)
+  createdAt            DateTime @default(now())
+}
+
+model User {
+  id          String      @id      @default(cuid())
+  shop        String      @unique
+  username    String
+  password    String
+  token       String?
+  authorized  Boolean     @default(false)
+}

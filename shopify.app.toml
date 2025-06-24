@@ -1,0 +1,16 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "226c3bf4890262dd060d0c5d98407695"
+name = "testApp2"
+handle = "testapp2-280"
+application_url = "https://example.com/"
+embedded = true
+
+[webhooks]
+api_version = "2025-04"
+
+[auth]
+redirect_urls = [ "https://example.com/api/auth" ]
+
+[pos]
+embedded = false
