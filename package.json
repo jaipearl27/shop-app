@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "build": "remix vite:build",
-    "dev": "shopify app dev --tunnel-url=https://39f7-103-182-161-55.ngrok-free.app:3000",
+    "dev": "shopify app dev --tunnel-url=https://9edd-103-182-161-55.ngrok-free.app:3000",
     "config:link": "shopify app config link",
     "generate": "shopify app generate",
     "deploy": "shopify app deploy",
