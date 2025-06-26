@@ -89,3 +89,9 @@ undefined
 {"level":"error","message":"Fulfillment Orders API - Error - {}","timestamp":"2025-06-23T06:23:53.888Z"}
 {"level":"error","message":"Fulfillment Orders API - Error - {}","timestamp":"2025-06-23T06:46:20.414Z"}
 {"level":"error","message":"Fulfillment Orders API - Error - {}","timestamp":"2025-06-23T07:22:17.504Z"}
+{"level":"error","message":"API - Create Order 403","timestamp":"2025-06-26T08:36:30.049Z"}
+{"level":"error","message":"API - Create Order 403","timestamp":"2025-06-26T08:50:53.831Z"}
+{"level":"error","message":"API - Create Order 403","timestamp":"2025-06-26T08:57:29.090Z"}
+{"level":"error","message":"API - Create Order 403","timestamp":"2025-06-26T09:03:50.808Z"}
+{"level":"error","message":"API - Create Order 403","timestamp":"2025-06-26T09:09:07.434Z"}
+{"level":"error","message":"API - Create Order 403","timestamp":"2025-06-26T09:10:48.987Z"}

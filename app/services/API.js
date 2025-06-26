@@ -150,7 +150,6 @@ export const createOrder = async (orders, shop) => {
                     }
                 )
                 .then(async (result) => {
-                    console.log(`🎈🎈🎈🎈🎈🎈🎈 ${result}`)
                     if (result?.data?.status_code === 200) {
                         await prisma.orders.update({
                             where: {

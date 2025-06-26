@@ -157,7 +157,7 @@ export const action = async ({ request }) => {
         return { createFulfillmentData: createFulfillmentData };
 
     } catch (error) {
-        console.log('error', error)
+        // console.log('error', error)
         logger.error(`Create Fulfillment Orders API - Error - ${JSON.stringify(error)}`)
         return { error: error?.message || error }
     }

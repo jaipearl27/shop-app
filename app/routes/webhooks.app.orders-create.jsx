@@ -1,4 +1,3 @@
-import { formatDate } from "../../utils";
 import prisma from "../db.server";
 import { authenticate } from "../shopify.server";
 import { createOrder, signin } from "../services/API";
@@ -28,16 +27,18 @@ export const action = async ({ request }) => {
 
     // Try to send order to external service
     let result = await createOrder([orderData], shop);
-    logger.info("Webhook - Create Order", result);
+    logger.info("Webhook - Create Order - 1st try", result);
+
+    // console.log(`🕹🕹🎮♟♟🀄♟♟`, result)
 
     // If unauthorized, re-authenticate and retry
-    if (result.status === 403) {
+    if (result?.results?.status_code === 403 || (Array.isArray(result?.results) && result?.results?.[0]?.status_code === 403)) {
       logger.warn("Webhook - Create Order - Unauthorized, retrying after signin.");
       await signin(shop);
       result = await createOrder([orderData], shop);
-      logger.info("Webhook - Create Order - Retry", result);
+      logger.info("Webhook - Create Order - 2nd try", result);
 
-      if (result.status === 403) {
+      if (result?.results?.status_code === 403 || (Array.isArray(result?.results) && result?.results?.[0]?.status_code === 403)) {
         logger.error("Webhook - Create Order - Retry failed due to invalid credentials.");
       }
     }

@@ -79,7 +79,7 @@ export default function AppSettingsPage() {
 
   useEffect(() => {
     // setStateUpdated(false);
-    console.log(actionData, 'action data')
+    // console.log(actionData, 'action data')
     if (!actionData?.success) {
       setErrorMessage(actionData?.message);
     } else {

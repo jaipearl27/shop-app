@@ -18,13 +18,13 @@ export const links = () => [{ rel: "stylesheet", href: polarisStyles }];
 
 export const loader = async ({ request }) => {
   const errors = loginErrorMessage(await login(request));
-  console.log('auth loader', request)
+  // console.log('auth loader', request)
   return { errors, polarisTranslations };
 };
 
 export const action = async ({ request }) => {
   const errors = loginErrorMessage(await login(request));
-console.log('auth action', request)
+// console.log('auth action', request)
   return {
     errors,
   };
