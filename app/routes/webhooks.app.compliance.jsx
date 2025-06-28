@@ -17,47 +17,51 @@ function isValidShopifyWebhook(request, rawBody) {
 }
 
 export const action = async ({ request }) => {
+
+
+  logger.info('webhook hit - compliance')
+
   const rawBody = Buffer.from(await request.arrayBuffer());
   if (!isValidShopifyWebhook(request, rawBody)) {
+    logger.error('webhook compliance - unauthorized')
     return new Response("Unauthorized", { status: 401 });
   }
 
   const payload = JSON.parse(rawBody.toString("utf8"));
   const topic = request.headers.get("x-shopify-topic");
 
+
+  logger.info(`webhook - compliance payload : ${JSON.stringify(payload)} | Topic: ${topic}`)
+
+
+  let orders;
+
   switch (topic) {
     case "customers/data_request": {
-      // Fetch user data
-      const user = await prisma.user.findFirst({
-        where: {
-          shop: payload.shop_domain,
-          id: payload.customer.id,
-        },
-      });
-
       // Fetch all orders for this customer/shop
-      const orders = await prisma.orders.findMany({
-        where: {
-          shop: payload.shop_domain,
-          order: {
-            path: ["customer", "id"],
-            equals: payload.customer.id,
-          },
+      const { shop_domain, customer, orders_requested } = payload;
+
+      const whereClause = {
+        shop: shop_domain,
+        order: {
+          path: ["customer", "id"],
+          equals: customer.id,
         },
-      });
-
-      // Optionally, fetch sessions or other related data
-
-      // Compose the data to return or send to Shopify (or log/queue for processing)
-      const customerData = {
-        user,
-        orders,
-        // Add more related data as needed
       };
 
-      logger.info("Customer data request", customerData);
+      // If orders_requested is present, filter by order.id inside the JSON
+      if (Array.isArray(orders_requested) && orders_requested.length > 0) {
+        whereClause.AND = {
+          order: {
+            path: ["id"],
+            in: orders_requested,
+          },
+        };
+      }
 
-      // You may need to email this data to the customer or upload it for Shopify
+      orders = await prisma.orders.findMany({ where: whereClause });
+
+      logger.info("Orders data request", orders);
       break;
     }
 
@@ -72,12 +76,14 @@ export const action = async ({ request }) => {
           },
         },
       });
+
       await prisma.user.deleteMany({
         where: {
           shop: payload.shop_domain,
           id: payload.customer.id,
         },
       });
+
       break;
 
     case "shop/redact":
@@ -95,9 +101,14 @@ export const action = async ({ request }) => {
 
     default:
       // Unknown topic, ignore or log
-      logger.warn("Unknown compliance webhook topic", topic);
+      logger.error("Unknown compliance webhook topic", topic);
       break;
   }
 
-  return { success: true };
+  if (orders) {
+    return { success: true, orders: orders };
+  } else {
+    return { success: true };
+  }
+
 };

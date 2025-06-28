@@ -111,7 +111,7 @@ export const createOrder = async (orders, shop) => {
             }
 
             const payload = {
-                "*SHIPMENT_ORDER_NUMBER": orderData.id.toString(),
+                "*SHIPMENT_ORDER_NUMBER": orderData?.order_number.toString(),
                 "*SHIPMENT_INVOICE_CODE": "",
                 "*SHIPMENT_ORDER_DATE": formatDate(orderData?.created_at),
                 "*SHIPMENT_WEIGHT": `${orderData?.total_weight}`,
@@ -139,6 +139,8 @@ export const createOrder = async (orders, shop) => {
                 "*COLLECTABLE_AMOUNT": orderData?.total_outstanding
             };
 
+            logger.info(`create order - api - ${JSON.stringify(payload)}`)
+
             const promise = axios
                 .post(
                     `${process.env.NODE_ENV === "production" ? process.env.API_URL : process.env.API_URL_TEST}/order_allocation/shopify/create_order`,
@@ -153,7 +155,7 @@ export const createOrder = async (orders, shop) => {
                     if (result?.data?.status_code === 200) {
                         await prisma.orders.update({
                             where: {
-                                id: payload["*SHIPMENT_ORDER_NUMBER"]
+                                id: orderData?.id.toString()
                             },
                             data: {
                                 synched: true

@@ -27,7 +27,7 @@ export const action = async ({ request }) => {
 
     // Try to send order to external service
     let result = await createOrder([orderData], shop);
-    logger.info("Webhook - Create Order - 1st try", result);
+    logger.info("Webhook - Create Order - 1st try", JSON.stringify(result));
 
     // console.log(`🕹🕹🎮♟♟🀄♟♟`, result)
 

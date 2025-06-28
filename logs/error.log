@@ -95,3 +95,9 @@ undefined
 {"level":"error","message":"API - Create Order 403","timestamp":"2025-06-26T09:03:50.808Z"}
 {"level":"error","message":"API - Create Order 403","timestamp":"2025-06-26T09:09:07.434Z"}
 {"level":"error","message":"API - Create Order 403","timestamp":"2025-06-26T09:10:48.987Z"}
+{"level":"error","message":"User not found for shop fulfillzy-test.myshopify.com","timestamp":"2025-06-27T09:21:02.097Z"}
+{"level":"error","message":"User not found for shop shou-p-fi.myshopify.com","timestamp":"2025-06-28T11:13:43.652Z"}
+{"level":"error","message":"API - Create Order undefined","timestamp":"2025-06-28T11:35:23.605Z"}
+{"level":"error","message":"API - Create Order undefined","timestamp":"2025-06-28T11:44:27.562Z"}
+{"level":"error","message":"API - Create Order undefined","timestamp":"2025-06-28T11:50:41.753Z"}
+{"level":"error","message":"Create Fulfillment Orders API - Error - {}","timestamp":"2025-06-28T12:01:08.672Z"}

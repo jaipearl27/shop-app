@@ -65,6 +65,9 @@ export const action = async ({ request }) => {
 
     const orders = ordersResult.map(item => item.order);
 
+
+    // in case of failure client wants to see reason in banner on the page
+
     if (orders && orders.length > 0) {
         let result = await createOrder(orders, shop)
         logger.info(`Sync Order 1st Try ${JSON.stringify(result)}`)
@@ -144,6 +147,11 @@ export default function Order() {
     }, [location.search]);
 
 
+    // useEffect(() => {
+    //     console.log('orders', orders)
+    // }, [orders])
+
+
     const rowMarkup = loading
         ? /* ... skeleton code is fine ... */
         Array.from({ length: 10 }).map((_, index) => (
@@ -172,10 +180,11 @@ export default function Order() {
             <IndexTable.Row id={id} key={id} position={index} selected={selectedResources.includes(id)}>
                 <IndexTable.Cell>
                     <Text variant="bodyMd" fontWeight="bold" as="span">
-                        {index + 1 + (page - 1) * 25}
+                        {/* {index + 1 + (page - 1) * 25} */}
+                        #{order.order_number}
                     </Text>
                 </IndexTable.Cell>
-                <IndexTable.Cell>{id}</IndexTable.Cell>
+                
                 <IndexTable.Cell>
                     {order?.billing_address?.name ||
                         order?.shipping_address?.name ||
@@ -236,8 +245,8 @@ export default function Order() {
                                 onSelectionChange={handleSelectionChange}
                                 selectable={true}
                                 headings={[
-                                    { title: "S.No" },
-                                    { title: "Order ID" },
+                                    // { title: "S.No" },
+                                    { title: "Order" },
                                     { title: "Customer" },
                                     { title: "Total" },
                                     { title: "Created At" },
